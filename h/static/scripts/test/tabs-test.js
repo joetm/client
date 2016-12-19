@@ -46,6 +46,7 @@ describe('tabs', function () {
   describe('shouldShowInTab', function () {
     unroll('returns true if the annotation should be shown', function (testCase) {
       var ann = fixtures.defaultAnnotation();
+      ann.$anchorTimeout = testCase.anchorTimeout;
       ann.$orphan = testCase.orphan;
 
       assert.equal(tabs.shouldShowInTab(ann, uiConstants.TAB_ANNOTATIONS,
@@ -53,18 +54,32 @@ describe('tabs', function () {
       assert.equal(tabs.shouldShowInTab(ann, uiConstants.TAB_ORPHANS,
         testCase.separateOrphans), testCase.expectedTab === uiConstants.TAB_ORPHANS);
     }, [{
+      anchorTimeout: false,
       orphan: undefined,
       separateOrphans: false,
       expectedTab: uiConstants.TAB_ANNOTATIONS,
     },{
+      anchorTimeout: false,
       orphan: undefined,
       separateOrphans: true,
       expectedTab: null,
     },{
+      anchorTimeout: false,
       orphan: false,
       separateOrphans: true,
       expectedTab: uiConstants.TAB_ANNOTATIONS,
     },{
+      anchorTimeout: false,
+      orphan: true,
+      separateOrphans: true,
+      expectedTab: uiConstants.TAB_ORPHANS,
+    },{
+      anchorTimeout: true,
+      orphan: undefined,
+      separateOrphans: true,
+      expectedTab: uiConstants.TAB_ANNOTATIONS,
+    },{
+      anchorTimeout: true,
       orphan: true,
       separateOrphans: true,
       expectedTab: uiConstants.TAB_ORPHANS,
